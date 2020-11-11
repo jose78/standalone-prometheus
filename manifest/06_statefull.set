@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: StatefullSet
+metadata:
+  creationTimestamp: null
+  labels:
+    app: deployment-test-prom
+  name: deployment-test-prom
+spec:
+  podManagementPolicy: Parallel
+  serviceAccountName: user-test-prom
+  serviceName: svc-test-prom
+  replcias: 1
+  selector:
+    matchLabels:
+      app: deployment-test-prom
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: deployment-test-prom
+    spec:
+      containers:
+      - image: prom/prometheus:latest
+        name: prometheus
+        envFrom:
+         -configMapRef:
+             name:env-props-test-prom
+status: {}

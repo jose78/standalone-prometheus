@@ -1,0 +1,40 @@
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  creationTimestamp: null
+  labels:
+    app: test-prom
+  name: test-prom
+spec:
+  podManagementPolicy: Parallel
+  serviceAccountName: user-test-prom
+  serviceName: svc-test-prom
+  replcias: 1
+  selector:
+    matchLabels:
+      app: test-prom 
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: test-prom
+    spec:
+      containers:
+      - image: prom/prometheus:latest
+        name: prometheus
+        args:
+          - --config.file=/etc/prometheus/prometheus.yml
+          - --storage.tsdb.path=/prometheus-data
+          - --web.enable-lifecycle
+        ports:
+          - containerPort: 9090
+            protocol: TCP
+        volumeMounts:
+          - name: config-volume
+            mountPath: /etc/prometheus/
+      volumes:
+      - name: config-volume
+        configMap:
+          defaultMode: 420
+          name: configmap-test-prom 
