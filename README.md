@@ -1,10 +1,10 @@
 
 
-oc cluster up
+
 
 
 ## Create a NameSpace.
-We will start to playinv
+We will start creating a NameSpace.
 
 ```bash
 └─ $ ▶ oc create ns ns-test-prom
@@ -21,10 +21,12 @@ It is important to know that roles and clusterRoles only allow access to consume
 ```bash
 └─ $ ▶ oc create user user-test-prom  --dry-run=true -o yaml > 02_user.yml
 ```
+
 ### RoleBinding
 ```bash
 └─ $ ▶ oc create rolebinding reader-role-binding-test-prom --role=reader-role-test-prom --user=user-test-prom -o yaml --dry-run=true > 03_rolebinding.yml
 ```
+
 ## Create a PVC.
 My apologies, there aren't imperative way to create a PVC and following the next [doc](https://docs.openshift.com/enterprise/3.1/install_config/persistent_storage/persistent_storage_nfs.html) I will create the PVC with copy/paste :-(.
 
@@ -39,7 +41,7 @@ My apologies, you have to copy/paste some example about the statefullSet because
 └─ $ ▶ oc create deployment deployment-test-prom --image=prom/prometheus:latest --dry-run=true -o yaml | sed s/Deployment/StatefullSet/g | sed s/replicas/"podManagementPolicy: Parallel\n  serviceAccountName: user-test-prom\n  serviceName: svc-test-prom\n  replcias"/g | sed s/"resources: {}"/"envFrom:\n         -configMapRef:\n             name:env-props-test-prom"/g
 ```
 
-## CReate Route & Service.
+## Create Route & Service.
 
 
 ```bash
