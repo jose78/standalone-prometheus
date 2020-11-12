@@ -1,7 +1,5 @@
-
-
-
-
+# test-prom
+This is an example project about install a Standalone Prometheus over Openshift usin the imperative way. 
 
 ## Create a NameSpace.
 We will start creating a NameSpace.
@@ -16,12 +14,10 @@ It is important to know that roles and clusterRoles only allow access to consume
 ```bash
 └─ $ ▶ oc create role reader-role-test-prom  --verb=get,list,watch --resource=pods,services,endpoints  -o yaml > 01_role.yml
 ```
-
 ### Service Account
 ```bash
 └─ $ ▶ oc create user user-test-prom  --dry-run=true -o yaml > 02_user.yml
 ```
-
 ### RoleBinding
 ```bash
 └─ $ ▶ oc create rolebinding reader-role-binding-test-prom --role=reader-role-test-prom --user=user-test-prom -o yaml --dry-run=true > 03_rolebinding.yml
@@ -42,8 +38,6 @@ My apologies, you have to copy/paste some example about the statefullSet because
 ```
 
 ## Create Route & Service.
-
-
 ```bash
 oc create service loadbalancer svc-test-prom  --tcp=80:9090 --dry-run=true -o yaml
 ```
