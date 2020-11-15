@@ -1,4 +1,4 @@
-# test-prom
+# standalone-prometheus 
 This is an example project about install a Standalone Prometheus over Openshift usin the imperative way. 
 
 ## Create a NameSpace.
